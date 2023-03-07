@@ -28,180 +28,20 @@
 
     <title> SW사관학교 정글 | 나홀로 메모장 ver2.0 </title>
     
+    <link rel="stylesheet" href="./main.css">
+
     <!-- 스타일 -->
-    <style type="text/css">
-        * {
-            font-family: 'Stylish', sans-serif;
-        }
-        
-        .wrap {
-            width: 900px;
-            margin: auto;
-        }
-
-        .card {
-            margin: 20px auto;
-            border-radius: 5px;
-            padding: 15px;
-        }
-
-        .form-group {
-            width: 300px;
-
-        }
-
+    
 
     </style>
     <script>
-        $(document).ready(function () {
-	        showMemo();
-        });
-
-        function postMemo() {
-            let title = $("#input-title").val();
-            let text = $("#input-text").val();
-
-            $.ajax({
-                type: "POST",
-                url: "/memo/post",
-                data: {'title_give': title, 'text_give': text},
-                success: function (response) { 
-                    if (response["result"] == "success") {
-                        alert("저장 완료!");
-                        showMemo();
-                    } else {
-                        alert("서버 오류!");
-                    }
-                }
-            })
-        }
-
-        function showMemo() { 
-            $("#card-list").html("");        
-            $.ajax({
-                type: "GET",
-                url: "/memo/get",
-                data: {},
-                success: function (response) {
-                    let memos = response['memos'];
-                    for (let i=0; i < memos.length; i++) {
-                        makeCard(memos[i]['memotitle'],memos[i]['memotext']);
-                    }
-                }
-            })
-        }
-        
-
-        function makeCard(title, text) {
-            let temp_html =     
-                `<div class="card" id="${title}">
-                    <h5 class="card-title">${title}</h5>
-                    <p class="card-text">${text}</p>
-                    <button type="button" class="btn btn-dark btn-sm" onclick="editMemo('${title}','${text}')">수정</button>
-                    <button type="button" class="btn btn-light btn-sm" onclick="deleteMemo('${title}')">삭제</button>
-                </div>`;
-            $("#card-list").append(temp_html);
-        }
-
-        // 삭제하기
-        function deleteMemo(title) {
-                $.ajax({
-                    type: 'POST',
-                    url: '/memo/delete',
-                    data: {'title_give': title},
-                    success: function (response) {
-                        if (response['result'] == 'success') {
-                            alert('삭제 완료!')
-                            showMemo();
-                        }
-                    }
-                });
-            }
-        
-
-        // 수정하기
-        function editMemo(title, text) {
-            let temp_html =     
-                `<div class="form-group">
-                    <input id="input-title" class="mod-title" value='${title}'>
-                </div>
-                <div class="form-group">
-                    <textarea id="input-text" class="mod-text" placeholder="" rows="2">${text}</textarea>
-                </div>
-                <button type="submit" class="btn btn-primary" onclick="updateMemo('${title}')">저장</button>`;
-            $(`#${title}`).html(temp_html);
-        }
-
-
-        function updateMemo(title) {
-            let oldtitle = title
-            let newtitle = $("#input-title.mod-title").val();
-            let newtext = $("#input-text.mod-text").val();
-
-            $.ajax({
-                type: "POST",
-                url: "/memo/update",
-                data: {'oldtitle_give':oldtitle, 'newtitle_give': newtitle, 'text_give': newtext},
-                success: function (response) { 
-                    if (response["result"] == "success") {
-                        alert("저장 완료!");
-                        showMemo();
-                        // updateCard(oldtitle, newtitle, newtext);
-                    } else {
-                        alert("서버 오류!");
-                    }
-                }
-            })
-        }
-
-        // function updateCard(oldtitle, newtitle, newtext) {
-        //     showMemo()
-        
-        // }
 
     </script>
 
 </head>
         
 <body>
-    <div class="wrap">
-        <div class="jumbotron">
-            <h1 class="display-4">나홀로 메모장<span class="badge badge-secondary">ver2.0</span></h1>
-            <div>
-                <div class="form-group">
-                    <input id="input-title" class="form-control" placeholder="제목을 입력하세요">
-                </div>
-                <div class="form-group">
-                    <textarea id="input-text" class="form-control" placeholder="내용을 입력하세요" rows="2"></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary" onclick="postMemo()">저장하기</button>
-            </div>
-        </div>
-        
-        
-        <div id="card-list" class="card-columns">
-            <div class="card" id="첫번째 제목">
-                <h5 class="card-title">첫번째 제목</h5>
-                <p class="card-text">첫번째 내용</p>
-                <button type="button" class="btn btn-dark btn-sm" onclick="editMemo('첫번째 제목','첫번째 내용')">수정</button>
-                <button type="button" class="btn btn-light btn-sm" onclick="deleteMemo('첫번째 제목')">삭제</button>
-            </div>
-            <div class="card" id="두번째 제목">
-                <h5 class="card-title">두번째 제목</h5>
-                <p class="card-text">두번째 내용</p>
-                <button type="button" class="btn btn-dark btn-sm" onclick="editMemo('두번째 제목','두번째 내용')">수정</button>
-                <button type="button" class="btn btn-light btn-sm" onclick="deleteMemo('두번째 제목')">삭제</button>
-            </div>
-            <div class="card" id="세번째 제목">
-                <h5 class="card-title">세번째 제목</h5>
-                <p class="card-text">세번째 내용</p>
-                <button type="button" class="btn btn-dark btn-sm" onclick="editMemo('세번째 제목','세번째 내용')">수정</button>
-                <button type="button" class="btn btn-light btn-sm" onclick="deleteMemo('세번째 제목')">삭제</button>
-            </div>
-            
-        
-        </div> 
-    </div> 
+    Hello world!
 </body>
 
 </html>
